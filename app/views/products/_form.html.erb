@@ -1,0 +1,34 @@
+<div class="container mt-4 w-25">
+  <h1><%= @product.new_record? ? "Nuevo Producto" : "Editar Producto" %></h1>
+  <% if @product.errors.any? %>
+    <div class="alert alert-danger">
+      <ul>
+        <% @product.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= form_for @product do |f| %>
+    <div class="form-group mb-3">
+      <label class="form-label">Nombre del producto</label>
+      <%= f.text_field :name, class: 'form-control input-lg', placeholder: "Ej: Microondas" %>
+    </div>
+    <div class="form-group mb-3">
+      <label class="form-label">Precio del producto</label>
+      <%= f.text_field :price, class: 'form-control input-lg', placeholder: "Ej: 500.000" %>
+    </div>
+    <div class="form-group mb-3">
+      <label class="form-label"><strong>Categorías</strong></label><br>
+      <% unless @categories.nil?%>
+        <% @categories.each do |category| %>
+          <div class="d-flex flex-row">
+            <%= check_box_tag "categories[]", category.id, @product.category_ids.include?(category.id), id: dom_id(category) %>
+            <%= category.name %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <%= f.submit @product.new_record? ? "Publicar producto" : "Editar Producto", class: 'btn btn-primary w-100' %>
+  <% end %>
+</div>

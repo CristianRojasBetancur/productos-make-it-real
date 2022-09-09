@@ -1,0 +1,42 @@
+<div class="container text-center mt-4">
+  <% if flash[:notice] %>
+    <div class="alert alert-info"><%= flash[:notice] %></div>
+  <% end %>
+  <%# header %>
+  <div class="row d-flex">
+    <div class="col-sm-6">
+      <h1><strong>Products</strong></h1>
+    </div>
+    <div class="col-sm-6">
+      <%= link_to "Nuevo Producto", new_product_path, class: "btn btn-primary" %>
+    </div>
+  </div>
+
+  <%# body %>
+
+  <div class="row mt-4 px-2">
+    <div class="col-2"><p><strong>Nombre</strong></p></div>
+    <div class="col-2"><p><strong>Precio</strong></p></div>
+    <div class="col-6"><p><strong>Categorias</strong></p></div>
+    <div class="col-2"><p><strong>Acciones</strong></p></div>
+  </div>
+  <hr class="m-0">
+  <% @products.each do |product| %>
+    <div class="row mt-4">
+      <div class="col-2"><p><%= product.name %>
+        </p></div>
+      <div class="col-2"><p><%= product.price %></p></div>
+      <div class="col-6">
+        <% product.categories.each do |category| %>
+          <p style="color: <%= category.color %>; font-weight: bold; display: inline;"><%= "#{category.name} " %></p>
+        <% end %>
+      </div>
+      <div class="d-flex col-2">
+        <%= link_to "Editar", edit_product_path(product), class: "btn btn-warning btn-sm h-75" %>
+        <%= button_to "Borrar", product, method: :delete, class: "btn btn-danger ms-2 btn-sm h-75" %>
+      </div>
+    </div>
+    <hr>
+  <% end %>
+
+</div>
